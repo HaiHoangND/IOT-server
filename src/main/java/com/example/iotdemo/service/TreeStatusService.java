@@ -34,7 +34,7 @@ public class TreeStatusService {
 
     public Boolean delete(int id) {
         treeStatusRepository.findById(id)
-                .orElseThrow(()-> new BusinessException("404", "error", "Order not found"));
+                .orElseThrow(()-> new BusinessException("404", "error", "Status not found"));
         treeStatusRepository.deleteById(id);
         return true;
     }

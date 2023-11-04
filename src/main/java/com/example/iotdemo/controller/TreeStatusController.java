@@ -17,21 +17,37 @@ public class TreeStatusController {
 
     @GetMapping("{id}")
     GeneralResponse<?> getTreeStatusById(@PathVariable int id) {
-        return GeneralResponse.ok("success", "Successfully fetched", treeStatusService.getById(id));
+        try {
+            return GeneralResponse.ok("success", "Successfully fetched", treeStatusService.getById(id));
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
     }
 
     @GetMapping
     GeneralResponse<?> getAllTreeStatus() {
-        return GeneralResponse.ok("success", "Successfully fetched", treeStatusService.getAll());
+        try {
+            return GeneralResponse.ok("success", "Successfully fetched", treeStatusService.getAll());
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
     }
 
     @PostMapping
-    GeneralResponse<?> createOrderStatus(@RequestBody TreeStatus treeStatus) {
-        return GeneralResponse.ok("success", "Successfully created", treeStatusService.create(treeStatus));
+    GeneralResponse<?> createTreeStatus(@RequestBody TreeStatus treeStatus) {
+        try {
+            return GeneralResponse.ok("success", "Successfully created", treeStatusService.create(treeStatus));
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
     }
 
     @DeleteMapping("{id}")
-    GeneralResponse<?> deleteOrderStatusById(@PathVariable int id){
-        return GeneralResponse.ok("success", "Successfully deleted", treeStatusService.delete(id));
+    GeneralResponse<?> deleteTreeStatusById(@PathVariable int id) {
+        try {
+            return GeneralResponse.ok("success", "Successfully deleted", treeStatusService.delete(id));
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
     }
 }
