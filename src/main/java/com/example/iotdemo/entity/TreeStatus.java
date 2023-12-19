@@ -16,8 +16,7 @@ public class TreeStatus implements Serializable {
     private int id;
 
     private int humidity;
-    private int light;
-    private int temperature;
+    private float temperature;
 
     @CreationTimestamp
     @Column(name = "created_at")

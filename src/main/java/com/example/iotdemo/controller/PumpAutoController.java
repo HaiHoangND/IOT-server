@@ -42,6 +42,24 @@ public class PumpAutoController {
         }
     }
 
+    @PutMapping("/updatePump")
+    GeneralResponse<?> updatePump(@RequestParam boolean pump) {
+        try {
+            return GeneralResponse.ok("success", "Successfully created", pumpAutoService.updatePump(pump));
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
+    }
+
+    @PutMapping("/updateAuto")
+    GeneralResponse<?> updateAuto(@RequestParam boolean auto) {
+        try {
+            return GeneralResponse.ok("success", "Successfully created", pumpAutoService.updateAuto(auto));
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
+    }
+
     @DeleteMapping("{id}")
     GeneralResponse<?> deletePumpById(@PathVariable int id) {
         try {
