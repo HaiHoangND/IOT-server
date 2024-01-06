@@ -33,6 +33,25 @@ public class TreeStatusController {
         }
     }
 
+    @GetMapping("/top10")
+    GeneralResponse<?> getTop10() {
+        try {
+            return GeneralResponse.ok("success", "Successfully fetched", treeStatusService.getTop10LatestTreeStatus());
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
+    }
+
+    @GetMapping("/latest")
+    GeneralResponse<?> getLatest() {
+        try {
+//            System.out.println(1);
+            return GeneralResponse.ok("success", "Successfully fetched", treeStatusService.getLatestTreeStatus());
+        } catch (Exception e) {
+            return GeneralResponse.failed("failed", e.getMessage());
+        }
+    }
+
     @PostMapping
     GeneralResponse<?> createTreeStatus(@RequestBody TreeStatus treeStatus) {
         try {

@@ -4,9 +4,14 @@ import com.example.iotdemo.entity.TreeStatus;
 import com.example.iotdemo.exception.BusinessException;
 import com.example.iotdemo.repository.TreeStatusRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +29,28 @@ public class TreeStatusService {
 
     public List<TreeStatus> getAll(){
         return treeStatusRepository.findAll();
+    }
+
+//    public List<TreeStatus> getTop10LatestTreeStatus() {
+//        PageRequest pageRequest = PageRequest.of(0, 10); // Lấy 10 bản ghi đầu tiên
+//        return treeStatusRepository.findTop10ByOrderByCreatedAtDesc(pageRequest);
+//    }
+
+    public List<TreeStatus> getTop10LatestTreeStatus() {
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        List<TreeStatus> top10LatestTreeStatus = treeStatusRepository.findTop10ByOrderByCreatedAtDesc(pageRequest);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Collections.reverse(top10LatestTreeStatus);
+        // Định dạng lại trường createdAt
+//        top10LatestTreeStatus.forEach(treeStatus -> {
+//            treeStatus.setCreatedAt(LocalDateTime.parse(treeStatus.getCreatedAt().format(formatter)));
+//        });
+
+        return top10LatestTreeStatus;
+    }
+
+    public Optional<TreeStatus> getLatestTreeStatus() {
+        return treeStatusRepository.findFirstByOrderByCreatedAtDesc();
     }
 
     @Transactional(rollbackOn = Exception.class)
