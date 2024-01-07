@@ -1,5 +1,6 @@
 package com.example.iotdemo.service;
 
+import com.example.iotdemo.dto.TreeStatusWithTime;
 import com.example.iotdemo.entity.TreeStatus;
 import com.example.iotdemo.exception.BusinessException;
 import com.example.iotdemo.repository.TreeStatusRepository;
@@ -36,17 +37,22 @@ public class TreeStatusService {
 //        return treeStatusRepository.findTop10ByOrderByCreatedAtDesc(pageRequest);
 //    }
 
-    public List<TreeStatus> getTop10LatestTreeStatus() {
+    public List<TreeStatusWithTime> getTop10LatestTreeStatus() {
         PageRequest pageRequest = PageRequest.of(0, 10);
         List<TreeStatus> top10LatestTreeStatus = treeStatusRepository.findTop10ByOrderByCreatedAtDesc(pageRequest);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         Collections.reverse(top10LatestTreeStatus);
+        List<TreeStatusWithTime> treeStatusWithTimeList = new ArrayList<>();;
         // Định dạng lại trường createdAt
-//        top10LatestTreeStatus.forEach(treeStatus -> {
-//            treeStatus.setCreatedAt(LocalDateTime.parse(treeStatus.getCreatedAt().format(formatter)));
-//        });
+        top10LatestTreeStatus.forEach(treeStatus -> {
+            TreeStatusWithTime treeStatusWithTime = new TreeStatusWithTime();
+            treeStatusWithTime.setHumidity(treeStatus.getHumidity());
+            treeStatusWithTime.setTemperature(treeStatus.getTemperature());
+            treeStatusWithTime.setCreatedAt(treeStatus.getCreatedAt().format(formatter));
+            treeStatusWithTimeList.add(treeStatusWithTime);
+        });
 
-        return top10LatestTreeStatus;
+        return treeStatusWithTimeList;
     }
 
     public Optional<TreeStatus> getLatestTreeStatus() {
